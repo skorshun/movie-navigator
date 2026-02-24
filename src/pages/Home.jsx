@@ -1,12 +1,14 @@
 import MovieCard from "../components/MovieCard.jsx";
 import {useEffect, useState} from "react";
 import {searchMovies, getPopularMovies} from "../services/api"
-import SearchSection from "../components/SearchSection.jsx";
+import SearchSection from "../components/SearchSection";
+import EmptyMoviesList from "../components/EmptyMoviesList";
 
 const Home = () => {
     const [movies, setMovies] = useState([])
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [query, setQuery] = useState("")
 
     const handleSearch = async (value) => {
         const query = value.toLowerCase().trim()
@@ -15,6 +17,7 @@ const Home = () => {
 
         const movies = await searchMovies(query);
         setMovies([...movies])
+        setQuery(query)
     }
 
     useEffect(() => {
@@ -43,9 +46,14 @@ const Home = () => {
                 {loading ? (
                     <div className="loading">Loading...</div>
                 ) : (
-                    <div className="movie-grid">
-                        {movies.map(movie => <MovieCard key={movie.id} movie={movie}/>)}
-                    </div>
+                    <>
+                        {movies.length ?
+                        <div className="movie-grid">
+                            {movies.map(movie => <MovieCard key={movie.id} movie={movie}/>)}
+                        </div>
+                            : <EmptyMoviesList query={query} />
+                        }
+                    </>
                 )}
             </div>
         </>
