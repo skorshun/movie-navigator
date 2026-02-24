@@ -13,12 +13,21 @@ const Home = () => {
     const handleSearch = async (value) => {
         const query = value.toLowerCase().trim()
 
-        if (!query) return;
+        if (!query) return
+        if (loading) return
 
-        const movies = await searchMovies(query);
-        setMovies([...movies])
-        setQuery(query)
-        console.log(movies)
+        setLoading(true)
+
+        try {
+            const movies = await searchMovies(query)
+            setMovies([...movies])
+            setQuery(query)
+            setError(null)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
