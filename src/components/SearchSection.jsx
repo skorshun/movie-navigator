@@ -5,7 +5,6 @@ const SearchSection = ({onSearch}) => {
 
     const handleSearch = (e) => {
         e.preventDefault()
-        console.log(e.target.value)
         onSearch(query)
     }
 
