@@ -1,39 +1,52 @@
 import MovieCard from "../components/MovieCard.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {searchMovies, getPopularMovies} from "../services/api"
+import SearchSection from "../components/SearchSection.jsx";
 
 const Home = () => {
-    const [searchQuery, setSearchQuery] = useState("")
+    const [movies, setMovies] = useState([])
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(true)
 
-    const handleSearch = (e) => {
-        e.preventDefault()
-        console.log(searchQuery)
+    const handleSearch = async (value) => {
+        const query = value.toLowerCase().trim()
+
+        if (!query) return;
+
+        const movies = await searchMovies(query);
+        setMovies([...movies])
     }
+
+    useEffect(() => {
+        const loadPopularMovies = async () => {
+            try {
+                const popularMovies = await getPopularMovies()
+                setMovies(popularMovies)
+            } catch (err) {
+                setError("Failed to load movies...")
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        loadPopularMovies()
+    }, [])
 
     return (
         <>
-            <nav className="navbar">
-                <a href="#" className="logo">MOVIE NAV</a>
-                <form onSubmit={handleSearch} className="search-container">
-                    <input
-                        type="text"
-                        className="search-bar"
-                        placeholder="Search movies..."
-                        onChange={(event) => setSearchQuery(event.target.value)}
-                        value={searchQuery}
-                    />
-                </form>
-                <div className="nav-spacer"></div>
-            </nav>
+            <SearchSection onSearch={handleSearch} />
             <div className="container">
                 <h1>Trending Movies</h1>
-                <div className="movie-grid">
-                    <MovieCard
-                        movie={{title: "test film", release_date: 1984, url: "https://m.media-amazon.com/images/I/61qCgQZyhOL.jpg"}}
-                    />
-                    <MovieCard
-                        movie={{title: "test film", release_date: 1984, url: "https://m.media-amazon.com/images/I/61qCgQZyhOL.jpg"}}
-                    />
-                </div>
+
+                {error && <div className="error-message">{error}</div>}
+
+                {loading ? (
+                    <div className="loading">Loading...</div>
+                ) : (
+                    <div className="movie-grid">
+                        {movies.map(movie => <MovieCard movie={movie}/>)}
+                    </div>
+                )}
             </div>
         </>
     )

@@ -8,20 +8,42 @@
 }
 .logo { font-size: 1.5rem; font-weight: bold; color: #e50914; text-decoration: none; flex: 1; }
 
-/* Search Bar Centered */
-.search-container { flex: 2; display: flex; justify-content: center; }
+/* Search Section (Under Navbar) */
+.search-section {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem 1rem 1rem;
+}
+.search-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  background-color: #333;
+  border-radius: 25px;
+  overflow: hidden;
+  border: 1px solid #444;
+}
 .search-bar {
-  width: 60%;
-  padding: 0.6rem 1rem;
-  border-radius: 20px;
+  flex: 1;
+  padding: 0.8rem 1.2rem;
   border: none;
   outline: none;
-  background-color: #333;
+  background-color: transparent;
   color: white;
+  font-size: 1rem;
 }
-
-/* Space to balance the flexbox */
-.nav-spacer { flex: 1; }
+.search-btn {
+  background-color: #e50914;
+  border: none;
+  color: white;
+  padding: 0 1.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-btn:hover { background-color: #b20710; }
 
 /* Movie Grid */
 .container { padding: 2rem; }
@@ -63,3 +85,15 @@
 }
 .like-btn.active { color: #e50914; }
 .like-btn:hover { transform: scale(1.2); }
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+.nav-links a:hover { color: #e50914; }
