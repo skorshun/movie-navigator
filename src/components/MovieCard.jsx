@@ -1,5 +1,5 @@
 import {formatDate} from '../utils/date'
-import {useMovieContext} from "../contexts/MovieContext";
+        import {useMovieContext} from "../contexts/MovieContext";
 import posterNotFoundImage from '../assets/poster-not-found.png'
 
 const MovieCard = ({movie}) => {
