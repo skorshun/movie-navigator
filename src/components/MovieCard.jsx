@@ -13,7 +13,7 @@ const MovieCard = ({movie}) => {
             <div className="movie-info">
                 <div>
                     <h3 className="movie-title">{movie.title}</h3>
-                    <small>{formatDate(movie?.release_date)}</small>
+                    <p className="movie-release-date">{formatDate(movie?.release_date)}</p>
                 </div>
                 <button className="like-btn" onClick={onFavoriteClick}>❤</button>
             </div>
