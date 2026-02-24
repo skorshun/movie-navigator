@@ -18,6 +18,7 @@ const Home = () => {
         const movies = await searchMovies(query);
         setMovies([...movies])
         setQuery(query)
+        console.log(movies)
     }
 
     useEffect(() => {
