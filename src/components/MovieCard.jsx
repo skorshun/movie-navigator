@@ -1,10 +1,24 @@
 import {formatDate} from '../utils/date'
+import {useMovieContext} from "../contexts/MovieContext";
 import posterNotFoundImage from '../assets/poster-not-found.png'
 
 const MovieCard = ({movie}) => {
+    const {
+        isFavorite,
+        addToFavorites,
+        removeFromFavorites
+    } = useMovieContext();
 
-    const onFavoriteClick = () => {
-        alert("Clicked")
+    const favorite = isFavorite(movie.id);
+
+    const onFavoriteClick = (e) => {
+        e.preventDefault();
+
+        if (favorite) {
+            removeFromFavorites(movie.id)
+        } else {
+            addToFavorites(movie)
+        }
     }
 
     return (
@@ -20,7 +34,7 @@ const MovieCard = ({movie}) => {
                     <h3 className="movie-title">{movie.title}</h3>
                     {movie?.release_date && <p className="movie-release-date">{formatDate(movie?.release_date)}</p>}
                 </div>
-                <button className="like-btn" onClick={onFavoriteClick}>❤</button>
+                <button className={`like-btn ${favorite ? "active" : ""}`} onClick={onFavoriteClick}>❤</button>
             </div>
         </div>
     )
